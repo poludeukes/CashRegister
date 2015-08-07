@@ -1,0 +1,81 @@
+---------- Layout
+
+Submit gomb
+setallnull gomb
+végösszeg label
+mellé statikus Összesen és huf label
+
+
+Label + checkbox párok:
+terméknév  ár készlet
+alatta gomb + minusgomb+ label + label ugyanerre a háromra
+
+
+
+Show
+Show készlet checkbox
+Show ár checkbox
+terméknév, mennyiség, ár
+
+fájlok:
+prices.csv
+mappák:
+- Logs
+dátumozott vásárlás-logok, apport-logok, termék-hozzáadás-logok
+
+
+
+
+------kassza systemfájlok tartalma:
+
+csv - pricelist
+terméknév, activeprice, termékár1, termékár2, ...
+pl.:
+csokis keksz; 4; 120; 130; 140; 150; 160
+csokitalan keksz; 3; 14;150;200;300;333330
+Ez a 150-et olvassa be majd. A nulla activeprice jelzi, hogy a termék inaktív
+
+
+
+------kassza output fájlok tartalma:
+
+Log:
+2015-10-15-09-17_12.log
+idõ, terméknév, ár, mennyiség
+pl.:
+2015-10-15 09:17; csoki; 150; 4
+2015-10-15 09:17; almák; 150; 1
+2015-10-15 09:17; körte; 50; 12
+2015-10-15 09:18; csoki; 150; 1
+2015-10-15 09:18; csoki; 150; 4
+2015-10-15 09:19; csoki; 150; 4
+
+Daily_sells.xml
+<Day date="2015-06-22">
+    <csoki>
+        <price>120</price>
+        <start_stock>30</start_stock>
+        <sold_amount>8</sold_amount>
+        <apport_amount>20</apport_amount>
+    </csoki>
+    <alma>
+        <price>40</price>
+        <start_stock>10</start_stock>
+        <sold_amount>2</sold_amount>
+        <apport_amount>0</apport_amount>
+    </alma>
+    ...
+</Day>
+<Day date="2015-06-22">
+    <sajt>
+        <price>...
+        ...
+        
+
+----- opciók
+
+apport:
+
+Apport 
+ felugró ablak buttonClick-re
+terméknevek sorban, melletük mennyiségbevivõ textbox, legfelül egy új termék gomb
