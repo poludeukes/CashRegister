@@ -10,11 +10,39 @@ using System.Windows.Forms;
 
 namespace kasszaprogram
 {
-    public partial class OptionsForm : Form
+    public sealed partial class OptionsForm : Form
     {
-        public OptionsForm()
+        private static volatile OptionsForm optionsFormSingleton;
+
+        private static object _syncRoot = new object();
+
+        public static OptionsForm GetSingletonInstance()
+        {
+            if(optionsFormSingleton == null)
+            {
+                lock (_syncRoot)
+                {
+                    if (optionsFormSingleton == null)
+                    {
+                        optionsFormSingleton = new OptionsForm();
+                    }
+                }
+            }
+            return optionsFormSingleton;
+        }
+
+        private OptionsForm()
         {
             InitializeComponent();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
+            
+            e.Cancel = true;
+            this.Hide();
+            
         }
 
         private int howManyMemberFLPs = 0;
@@ -43,7 +71,18 @@ namespace kasszaprogram
             OptionsFormSubFLP optionsFormSubFLP = new OptionsFormSubFLP(newProductName, newProductPrice, newProductAmount);
             howManyMemberFLPs++;
             optionsFormSubFLP.Name = howManyMemberFLPs.ToString();
+            
+
+            this.FLP_ProductsOptions.SuspendLayout();
             this.FLP_ProductsOptions.Controls.Add(optionsFormSubFLP);
+            // this.FLP_ProductsOptions.Controls.Add(new Button());
+            this.FLP_ProductsOptions.ResumeLayout(false);
+            this.FLP_ProductsOptions.PerformLayout();
+            // this.Refresh();
+            // 
+            // private System.Windows.Forms.Button PROBA = new Button();
+            // 
+            // this.FLP_ProductsOptions.Controls.Add(new Button());
         }
     }
 }
